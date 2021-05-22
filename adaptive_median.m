@@ -1,4 +1,4 @@
-img = (imread('images/cameraman.tif'));
+img = (imread('../images/cameraman.tif'));
 [R,C] = size(img);  
 
 img = im2double(img);
