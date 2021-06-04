@@ -1,9 +1,10 @@
-img = (imread('../images/cameraman.tif'));
+tic
+img = rgb2gray(imread('../images/lena.jpg'));
 [R,C] = size(img);  
 
 img = im2double(img);
-prob = 0.2;
-Smax = 3;
+prob = 0.02;
+Smax = 11;
 noised = imnoise(img,'salt & pepper',prob);
 filtered_img = ones(R,C);
 N = floor(Smax/2); 
@@ -13,6 +14,7 @@ for i=N+1:R-N
         filtered_img(i,j) = myfunc(i,j,noised,3,Smax);
     end
 end  
+toc
 
 subplot(3,1,1),imshow(img,[]),title("original");
 subplot(3,1,2),imshow(noised,[]),title("noise: "+prob);
