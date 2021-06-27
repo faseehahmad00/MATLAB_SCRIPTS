@@ -1,0 +1,12 @@
+img = (imread('../images/lena.jpg'));
+imshow(img)
+[r,c] = size(img);
+
+a = [0.8,0.2,0.2];
+R = 0.05;
+
+for i=1:r
+    for j=1:c
+        img(i,j,)
+    end
+end

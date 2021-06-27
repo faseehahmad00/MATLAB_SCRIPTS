@@ -1,18 +1,30 @@
-img  = rgb2gray(imread('/home/anonymous/Mscripts/images/img.jpg'));
-[r,c] = size(img);
+img  = (imread('/home/anonymous/jupyter notebooks/python/test/107.jpg'));
 
-mask = 3;
-n = floor(mask/2);
+R = img(:,:,1);
+[r,c] = size(R);
+G = img(:,:,2);
+B = img(:,:,3);
+hsv_image = rgb2hsv(img);
+intensity_plane = hsv_image(:,:,3);
+intensity_plane = rescale(intensity_plane,0,0.8);
+figure , imshow(intensity_plane) , title("rescaling")
+% log_transformation
+intensity_plane = 1.5 * log (1 + intensity_plane);
+figure , imshow(intensity_plane) , title("log transform")
 
-filter =  img;
+filter = ones(7,7)/49;
+blurred =    imfilter(intensity_plane,filter);
+edges = intensity_plane - blurred;
+sharpened = intensity_plane + edges;
+figure , imshow(sharpened) , title('sharpened')
+new_img = zeros(r,c,3);
+new_img(:,:,1) = hsv_image(:,:,1);
+new_img(:,:,2) = hsv_image(:,:,2);
+new_img(:,:,3) = sharpened ;
+figure , imshow(new_img);
+newrgb = hsv2rgb(new_img);
+figure , imshow(newrgb);
 
-for i=n+1:r-n
-    for j=n+1:c-n
-        temp  = img(i-n:i+n,j-n:j+n); 
-        filter(i,j) = sum(temp,'all')/mask^2;
-    end
-end  
+imwrite(newrgb,'/home/anonymous/jupyter notebooks/python/test/fixednew.jpg')
 
-edges = img - filter;
-subplot(1,2,1) ,imshow(img);
-subplot(1,2,2) , imshow(img+edges)
+% imshow(sharpened);
