@@ -1,5 +1,0 @@
-gray=im2gray(imread('../images/lena.jpg'));
-imshow(gray)
-[r,c] = size(gray)
-
-for i=1:r
